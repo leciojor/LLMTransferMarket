@@ -1,0 +1,45 @@
+DROP TABLE IF EXISTS team_championship_title CASCADE;
+DROP TABLE IF EXISTS person_club_transfer CASCADE;
+DROP TABLE IF EXISTS player_championship_title CASCADE;
+DROP TABLE IF EXISTS player_award CASCADE;
+DROP TABLE IF EXISTS coach CASCADE;
+DROP TABLE IF EXISTS player CASCADE;
+DROP TABLE IF EXISTS championship_title CASCADE;
+DROP TABLE IF EXISTS championship CASCADE;
+DROP TABLE IF EXISTS award CASCADE;
+DROP TABLE IF EXISTS person CASCADE;
+DROP TABLE IF EXISTS club_transfer CASCADE;
+DROP TABLE IF EXISTS contract CASCADE;
+DROP TABLE IF EXISTS team CASCADE;
+
+CREATE TABLE team (
+  id BIGSERIAL PRIMARY KEY,
+  name VARCHAR(255) NOT NULL,
+  description VARCHAR(255) NOT NULL DEFAULT '',
+  date_founded DATE NOT NULL
+);
+
+CREATE TABLE contract (
+  id BIGSERIAL PRIMARY KEY,
+  salary DOUBLE PRECISION NOT NULL,
+  gloves DOUBLE PRECISION NOT NULL DEFAULT 0,
+  start_date DATE NOT NULL,
+  end_date DATE NOT NULL
+);
+
+CREATE TABLE club_transfer (
+  id BIGSERIAL PRIMARY KEY,
+  borrowing BOOLEAN NOT NULL DEFAULT false,
+  new_contract BIGINT REFERENCES contract(id),
+  date TIMESTAMPTZ NOT NULL
+);
+
+CREATE TABLE person (
+  id BIGSERIAL PRIMARY KEY,
+  name VARCHAR(255) NOT NULL,
+  age BIGINT NOT NULL,
+  current_club BIGINT,
+  most_recent_club_transfer BIGINT,
+  current_contract BIGINT,
+  birthday DATE NOT NULL
+);
